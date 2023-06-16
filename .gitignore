@@ -6,3 +6,4 @@
 
 my_website/.terraform.lock.hcl
 modules/.DS_Store
+.DS_Store
