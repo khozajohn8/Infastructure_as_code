@@ -3,6 +3,7 @@
 resource "aws_security_group" "alb_security_group" {
   name        = "alb security group"
   description = "Allow ssh and http inbound traffic"
+  vpc_id      = var.vpc_id 
 
   ingress {
     description = "https access"
@@ -36,6 +37,7 @@ resource "aws_security_group" "alb_security_group" {
 resource "aws_security_group" "ec2_security_group" {
   name        = "ec2 security group"
   description = "enable http/https access on port 80/443 via alb sg"
+  vpc_id      = var.vpc_id 
 
   ingress {
     description      = "http access"
@@ -64,3 +66,4 @@ resource "aws_security_group" "ec2_security_group" {
     Name = "ec2 security group"
   }
 }
+
