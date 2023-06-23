@@ -16,7 +16,7 @@ provider "aws" {
 #create VPC
 
 module "vpc" {
-  source = "../modules/vpc"
+  source                        = "../modules/vpc"
   region                        = var.region
   project_name                  = var.project_name
   vpc_cidr                      = var.vpc_cidr
@@ -28,6 +28,22 @@ module "vpc" {
   private_data_subnet_az2_cidr  = var.private_data_subnet_az2_cidr
 }
 
+#create nat gateways
+
+module "nat_gateway" {
+  source                        = "../modules/nat-gateway"
+  public_subnet_az1_id          = module.vpc.public_subnet_az1_id    
+  internet_gateway              = module.vpc.internet_gateway
+  public_subnet_az2_id          = module.vpc.public_subnet_az2_id
+  vpc_id                        = module.vpc.vpc_id
+  private_app_subnet_az1_id     = module.vpc.private_app_subnet_az1_id
+  private_data_subnet_az1_id    = module.vpc.private_data_subnet_az1_id
+  private_app_subnet_az2_id     = module.vpc.private_app_subnet_az2_id
+  private_data_subnet_az2_id    = module.vpc.private_data_subnet_az2_id
+  
+}
+
+#Create AWS instances
 resource "aws_instance" "web_server" {
   count = 2
   ami                    = "ami-022e1a32d3f742bd8"
@@ -42,6 +58,7 @@ resource "aws_instance" "web_server" {
   }
 }
 
+#Create AWS instances
 resource "aws_instance" "web_server1" {
   count = 2
   ami                    = "ami-022e1a32d3f742bd8"
@@ -56,11 +73,13 @@ resource "aws_instance" "web_server1" {
   }
 }
 
+# Create security group
 module "security_group" {
   source                        = "../modules/security_groups"
   vpc_id = module.vpc.vpc_id
 }
 
+# Rreate application load balancer
 module "application_load_balancer" {
   source                        = "../modules/alb"
   project_name                  = module.vpc.project_name
@@ -71,6 +90,7 @@ module "application_load_balancer" {
   certificate_arn               = module.acm.certificate_arn
 }
 
+# Create AWS certificate manager
 module "acm" {
   source                        = "../modules/acm"
   domain_name                   = var.domain_name
