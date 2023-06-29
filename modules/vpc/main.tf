@@ -95,6 +95,7 @@ resource "aws_subnet" "private_app_subnet_az2" {
   }
 }
 
+
 # create private data subnet az1
 resource "aws_subnet" "private_data_subnet_az1" {
   vpc_id                   = aws_vpc.vpc.id
@@ -116,5 +117,16 @@ resource "aws_subnet" "private_data_subnet_az2" {
 
   tags      = {
     Name    = "private data subnet az2"
+  }
+}
+
+# create private database subnet az1
+resource "aws_db_subnet_group" "database_subnet_az1" {
+  name                     = "database-subnets"
+  subnet_ids               = [aws_subnet.private_data_subnet_az1.id,aws_subnet.private_data_subnet_az2.id]
+  description              = "subnets for database instance" 
+
+  tags      = {
+    Name    = "database-subnets"
   }
 }

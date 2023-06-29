@@ -96,3 +96,9 @@ module "acm" {
   domain_name                   = var.domain_name
   alternative_name              = var.alternative_name
 }
+
+module "rds" {
+  source                        = "../modules/rds-instance"
+  database_subnet_az1_id        = module.vpc.database_subnet_az1_id
+  db_security_group_id          = module.security_group.db_security_group_id
+}
