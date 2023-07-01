@@ -81,3 +81,11 @@ module "rds" {
   database_subnet_az1_id        = module.vpc.database_subnet_az1_id
   db_security_group_id          = module.security_group.db_security_group_id
 }
+
+module "route_53" {
+  source                             = "../modules/route53"
+  domain_name                        = var.domain_name
+  application_load_balancer_dns_name = module.application_load_balancer.application_load_balancer_dns_name
+  application_load_balancer_zone_id  = module.application_load_balancer.application_load_balancer_zone_id
+  record_name                        = var.record_name
+}
