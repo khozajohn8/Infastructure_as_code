@@ -9,3 +9,8 @@ variable "target_group_dev_ids" {
   description = "List of target group instance IDs"
   type        = list(string)
 }
+
+variable "target_group_prod_ids" {
+  description = "List of target group instance IDs"
+  type        = list(string)
+}

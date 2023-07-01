@@ -24,6 +24,6 @@ resource "aws_instance" "web_server1" {
   user_data              = file("ec2-user-data.sh")
 
   tags = {
-    Name = "my-staging-${count.index}"
+    Name = "my-prod-${count.index}"
   }
 }
