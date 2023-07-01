@@ -1,8 +1,4 @@
-variable "ec2_instance_type" {
-  type = string
-  default = "t3.micro"
-}
-
+variable "ec2_instance_type" {}
 variable "region" {}
 variable "project_name" {}
 variable "vpc_cidr" {}

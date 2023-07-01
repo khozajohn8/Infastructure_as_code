@@ -43,34 +43,13 @@ module "nat_gateway" {
   
 }
 
-#Create AWS instances
-resource "aws_instance" "web_server" {
-  count = 2
-  ami                    = "ami-022e1a32d3f742bd8"
-  instance_type          = var.ec2_instance_type
-  vpc_security_group_ids = [module.security_group.ec2_security_group_id]
-  subnet_id              = module.vpc.public_subnet_az1_id
-  
-  user_data              = file("ec2-user-data.sh")
-
-  tags = {
-    Name = "my-dev-${count.index}"
-  }
-}
-
-#Create AWS instances
-resource "aws_instance" "web_server1" {
-  count = 2
-  ami                    = "ami-022e1a32d3f742bd8"
-  instance_type          = var.ec2_instance_type
-  vpc_security_group_ids = [module.security_group.ec2_security_group_id]
-  subnet_id              = module.vpc.public_subnet_az2_id
-  
-  user_data              = file("ec2-user-data.sh")
-
-  tags = {
-    Name = "my-staging-${count.index}"
-  }
+# create intances
+module "ec2_instances" {
+  source                        = "../modules/ec2" 
+  ec2_security_group_id         = module.security_group.ec2_security_group_id
+  public_subnet_az1_id          = module.vpc.public_subnet_az1_id
+  public_subnet_az2_id          = module.vpc.public_subnet_az2_id
+  ec2_instance_type             = var.ec2_instance_type 
 }
 
 # Create security group
