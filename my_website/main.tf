@@ -67,6 +67,8 @@ module "application_load_balancer" {
   public_subnet_az2_id          = module.vpc.public_subnet_az2_id
   vpc_id                        = module.vpc.vpc_id
   certificate_arn               = module.acm.certificate_arn
+  target_group_dev_ids          = module.ec2_instances.target_group_dev_ids
+  
 }
 
 # Create AWS certificate manager
@@ -76,11 +78,11 @@ module "acm" {
   alternative_name              = var.alternative_name
 }
 
-module "rds" {
+/*module "rds" {
   source                        = "../modules/rds-instance"
   database_subnet_az1_id        = module.vpc.database_subnet_az1_id
   db_security_group_id          = module.security_group.db_security_group_id
-}
+}*/
 
 module "route_53" {
   source                             = "../modules/route53"

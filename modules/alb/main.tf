@@ -15,7 +15,7 @@ resource "aws_lb" "application_load_balancer" {
 # create target group
 resource "aws_lb_target_group" "alb_target_group" {
   name        = "${var.project_name}-tg"
-  target_type = "ip"
+  target_type = "instance"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -33,6 +33,16 @@ resource "aws_lb_target_group" "alb_target_group" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+# create target group targets
+
+resource "aws_lb_target_group_attachment" "development" {
+  count            = length(var.target_group_dev_ids)
+  target_group_arn = aws_lb_target_group.alb_target_group.arn
+  target_id        = var.target_group_dev_ids[count.index]
+  port             = 80
+  
 }
 
 # create a listener on port 80 with redirect action
