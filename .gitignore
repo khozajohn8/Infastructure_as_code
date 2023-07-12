@@ -1,13 +1,5 @@
-
-**/.terraform/*
-
-*.tfstate
-*.tfstate.*
-
-my_website/.terraform.lock.hcl
 modules/.DS_Store
 .DS_Store
-*.terraform.lock.hcl
 
 # Local .terraform directories
 **/.terraform/*
