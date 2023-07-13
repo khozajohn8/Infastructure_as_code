@@ -4,6 +4,6 @@ terraform {
     bucket    = "my-website-terraform-remote-state-jk"
     key       = "my-website.tfstate"
     region    = "us-east-1"
-  #  profile   = "JohnKhoza"
+    dynamodb_table = "my-dynamo-db-table"
   }
 }
