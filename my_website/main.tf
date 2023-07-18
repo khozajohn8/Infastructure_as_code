@@ -10,7 +10,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = var.region
-# profile = ""
+  profile = "Codebuild-user"
 }
 
 #create VPC

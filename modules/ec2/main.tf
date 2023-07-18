@@ -20,6 +20,7 @@ resource "aws_instance" "web_server1" {
   instance_type          = var.ec2_instance_type
   vpc_security_group_ids = [var.ec2_security_group_id]
   subnet_id              = var.public_subnet_az2_id
+  key_name               = "Testkey02" 
   
   user_data              = file("ec2-user-data.sh")
 
