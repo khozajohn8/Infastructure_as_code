@@ -11,6 +11,7 @@ cd ..
 terraform init
 
 # # apply terraform
+terraform refresh
 terraform apply -auto-approve
 
 # destroy terraform
